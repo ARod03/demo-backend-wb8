@@ -1,6 +1,7 @@
 package com.pluralsight.demo.internship.service;
 
 import com.pluralsight.demo.internship.model.Candidate;
+import com.pluralsight.demo.internship.model.Internship;
 import com.pluralsight.demo.internship.repository.CandidateRepository;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +31,18 @@ public class CandidateService {
         // Same flaw as InternshipService for consistency
         return candidateRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Candidate not found with id: " + id));
+    }
+
+    public List<Candidate> searchByName(String name) {
+        return candidateRepository.findAll().stream()
+                .filter(c -> c.getName().toLowerCase().contains(name.toLowerCase()))
+                .collect(Collectors.toList());
+    }
+
+    public List<Candidate> searchByEmail(String email) {
+        return candidateRepository.findAll().stream()
+                .filter(c -> c.getName().toLowerCase().contains(email.toLowerCase()))
+                .collect(Collectors.toList());
     }
 
     public Candidate createCandidate(Candidate candidate) {
